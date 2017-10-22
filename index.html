@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>    
+    <script src="atc.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .inputbox {
+            height: 98vh;
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>目标：<input type="text" v-model="target"></p>
+    
+    <textarea  v-model="origin" class="inputbox"></textarea>
+    <textarea  v-bind:value="result" class="inputbox"></textarea>
+  
+</div>
+
+<script>
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            origin: "",
+            target: "",
+            },
+        computed: {
+            result: function(){
+                return main(this.origin, this.target);
+            }
+        }
+    })
+
+</script>
+
+<button id="button">copy</button>
+<script>var copy_url = new Clipboard('#button', {text: function() {return app.result ;}});</script>
+
+</body>
+</html>
