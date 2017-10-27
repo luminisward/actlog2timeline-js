@@ -9,19 +9,39 @@
     <script src="atc.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <style>
+        .tablebox {
+            height: 80vh;
+            width: 100%;
+        }
         .inputbox {
-            height: 98vh;
-            width: 45%;
+            height: 100%;
+            width: 98%;
+            resize: none;
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <p>目标：<input type="text" v-model="target"></p>
-    
-    <textarea  v-model="origin" class="inputbox"></textarea>
-    <textarea  v-bind:value="result" class="inputbox"></textarea>
-  
+    <p style="display:inline; vertical-align:top">
+        目标：<textarea v-model="target" cols="20" rows="5"></textarea>
+        技能名转换：<textarea v-model="actionTranslateJson" cols="40" rows="5"></textarea>
+        排除的技能名：<textarea v-model="excludeActions" cols="40" rows="5"></textarea>
+    </p>
+    <p>起始时间：<input type="text" v-model="startTime">是否自动合并读条技能：<input type="checkbox" v-model="isAutoCombine"></p>
+    <table class="tablebox">
+        <tr height="20px">
+            <td>原文本：</td>
+            <td>转换后：</td>
+        </tr>
+        <tr>
+            <td>
+                <textarea v-model="origin" class="inputbox"></textarea>
+            </td>
+            <td>
+                <textarea v-bind:value="result" class="inputbox"></textarea>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <script>
@@ -31,10 +51,14 @@
         data: {
             origin: "",
             target: "",
+            startTime: "",
+            actionTranslateJson: "",
+            excludeActions: "",
+            isAutoCombine: false,
             },
         computed: {
             result: function(){
-                return main(this.origin, this.target);
+                return main(this.origin, this.target, this.startTime, this.isAutoCombine, this.actionTranslateJson, this.excludeActions);
             }
         }
     })
