@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>    
+    <script src="adjust-time.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .tablebox {
+            height: 80vh;
+            width: 100%;
+        }
+        .inputbox {
+            height: 100%;
+            width: 98%;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>增加秒数：<input type="text" v-model="seconds"></p>
+
+    <table class="tablebox">
+        <tr height="20px">
+            <td>原文本：</td>
+            <td>转换后：</td>
+        </tr>
+        <tr>
+            <td>
+                <textarea v-model="origin" class="inputbox"></textarea>
+            </td>
+            <td>
+                <textarea v-bind:value="result" class="inputbox"></textarea>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            origin: "",
+            target: "",
+            seconds: ""
+            },
+        computed: {
+            result: function(){
+                return main(this.origin, this.seconds);
+            }
+        }
+    })
+
+</script>
+
+<button id="button">copy</button>
+<script>var copy_url = new Clipboard('#button', {text: function() {return app.result ;}});</script>
+
+</body>
+</html>
